@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evimin Elektrik Rehberi</title>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="description" content="Ev elektrik panosu, sigorta ve priz bağlantı haritası.">
+</head>
+<body>
+    <header class="app-header">
+        <div class="container">
+            <div class="header-title">
+                <h1>⚡ Evimin Elektrik Rehberi</h1>
+                <p>Elektrik panosu, prizler ve aydınlatma devreleri haritası</p>
+            </div>
+            <div class="header-meta">
+                <span class="version" id="docVersion">Sürüm: Yükleniyor...</span>
+                <span class="date" id="docDate">Son Güncelleme: Yükleniyor...</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- İstatistik Kartları -->
+        <section class="stats-grid" id="statsContainer">
+            <div class="stat-card">
+                <div class="stat-value" id="statTotal">-</div>
+                <div class="stat-label">Toplam Sigorta</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statOutlets">-</div>
+                <div class="stat-label">Priz Devresi</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statLights">-</div>
+                <div class="stat-label">Aydınlatma</div>
+            </div>
+            <div class="stat-card warning">
+                <div class="stat-value" id="statUnverified">-</div>
+                <div class="stat-label">Doğrulanmamış</div>
+            </div>
+        </section>
+
+        <!-- Kontrol Çubuğu (Arama & Filtre) -->
+        <section class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Sigorta no, oda, priz veya cihaz ara...">
+            </div>
+            <div class="filter-box">
+                <select id="typeFilter">
+                    <option value="all">Tüm Devreler</option>
+                    <option value="priz">Sadece Prizler</option>
+                    <option value="aydinlatma">Sadece Aydınlatmalar</option>
+                    <option value="karma">Karma Devreler</option>
+                </select>
+                <select id="roomFilter">
+                    <option value="all">Tüm Odalar</option>
+                    <!-- JavaScript ile dinamik dolacak -->
+                </select>
+                <select id="statusFilter">
+                    <option value="all">Tüm Durumlar</option>
+                    <option value="verified">Sadece Doğrulanmış</option>
+                    <option value="unverified">Kontrol Edilecekler</option>
+                </select>
+            </div>
+            <div class="export-box">
+                <button id="btnExport" class="btn btn-secondary">JSON İndir</button>
+                <a href="qr-etiket.html" class="btn btn-primary" target="_blank">🖨️ QR Etiket Yazdır</a>
+            </div>
+        </section>
+
+        <!-- Sigorta Kartları Izgarası -->
+        <section class="fuses-grid" id="fusesContainer">
+            <!-- Kartlar JS ile buraya eklenecek -->
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <div class="container">
+            <div class="safety-notice">
+                <strong>⚠️ ELEKTRİK GÜVENLİĞİ UYARISI:</strong>
+                <p>Bu uygulama kişisel dokümantasyon amaçlıdır. Bir sigortanın kapalı olması, devrede elektrik olmadığı anlamına <b>kesin olarak</b> gelmez (nötr dönüşleri, yanlış kablolama vb. riskler). Elektrik tesisatına müdahale etmeden önce <b>mutlaka kontrol kalemi veya multimetre ile voltaj kontrolü yapın</b>. Şüphe duyduğunuz durumlarda yetkin bir elektrik uzmanından destek alın.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Veri ve Uygulama Mantığı -->
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

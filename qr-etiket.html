@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>QR Etiket Oluşturucu</title>
+    <style>
+        body { font-family: sans-serif; background: #f1f5f9; padding: 2rem; display: flex; flex-direction: column; align-items: center; }
+        .controls { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 2rem; width: 100%; max-width: 600px; }
+        .controls label { font-weight: bold; display: block; margin-bottom: 0.5rem; }
+        .controls input { width: 100%; padding: 0.75rem; margin-bottom: 1rem; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 1rem; }
+        .btn { background: #2563eb; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 4px; font-weight: bold; cursor: pointer; }
+        
+        /* Etiket Tasarımı */
+        .label-container { background: white; padding: 20px; border: 3px solid #1e293b; border-radius: 12px; text-align: center; width: 300px; display: none; }
+        .label-header { background: #1e293b; color: white; padding: 10px; border-radius: 6px; font-weight: 900; letter-spacing: 1px; font-size: 1.2rem; margin-bottom: 15px; }
+        .label-desc { font-size: 0.85rem; color: #475569; margin-bottom: 15px; font-weight: 600; }
+        #qrcode { margin: 0 auto; display: flex; justify-content: center; }
+        .label-footer { margin-top: 15px; font-size: 0.7rem; color: #94a3b8; border-top: 1px solid #e2e8f0; padding-top: 10px; }
+        
+        @media print {
+            body { background: white; padding: 0; }
+            .controls { display: none; }
+            .label-container { display: block; box-shadow: none; }
+        }
+    </style>
+    <!-- Harici bağımlılık olmadan çalışan minimal QR kütüphanesi -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+
+    <div class="controls">
+        <h2>🖨️ QR Etiket Yazdır</h2>
+        <p>1. Rehberinizi GitHub Pages'da yayımladıktan sonra size verilen <b>gerçek URL adresini</b> buraya yapıştırın.</p>
+        <p>2. "Etiket Oluştur" butonuna basın ve tarayıcınızın Yazdır (Ctrl+P) özelliğini kullanarak etiketi yazdırın.</p>
+        
+        <label for="urlInput">Yayımlanmış Site Adresi (URL):</label>
+        <input type="text" id="urlInput" placeholder="https://kullaniciadi.github.io/elektrik-rehberi/">
+        
+        <button class="btn" onclick="generateLabel()">Etiketi Oluştur ve Yazdır</button>
+        <a href="index.html" style="margin-left: 1rem; color: #64748b; text-decoration: none;">Geri Dön</a>
+    </div>
+
+    <div class="label-container" id="printableLabel">
+        <div class="label-header">EVİN ELEKTRİK REHBERİ</div>
+        <div class="label-desc">Devre şeması, sigortalar ve priz detayları için kameranızı okutun.</div>
+        <div id="qrcode"></div>
+        <div class="label-footer">Elektrik panosu referans kodu</div>
+    </div>
+
+    <script>
+        function generateLabel() {
+            const url = document.getElementById('urlInput').value;
+            if(!url || !url.startsWith('http')) {
+                alert("Lütfen geçerli bir http:// veya https:// adresi girin.");
+                return;
+            }
+            
+            document.getElementById('printableLabel').style.display = 'block';
+            document.getElementById('qrcode').innerHTML = ''; // Temizle
+            
+            new QRCode(document.getElementById("qrcode"), {
+                text: url,
+                width: 180,
+                height: 180,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+            
+            setTimeout(() => { window.print(); }, 500);
+        }
+    </script>
+</body>
+</html>
